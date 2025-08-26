@@ -45,13 +45,15 @@ class TensorImage {
     tensorImage.loadImage(image);
     return tensorImage;
   }
-  static TensorImage fromBytes(Uint8List bytes,int originalWidth,int originalHeight) {
-          final Image image = Image.fromBytes(
-          width: originalWidth,
-          height: originalHeight,
-          bytes: bytes.buffer,
-          format: Format.uint8,
-          numChannels: 3);
+
+  static TensorImage fromBytes(
+      Uint8List bytes, int originalWidth, int originalHeight) {
+    final Image image = Image.fromBytes(
+        width: originalWidth,
+        height: originalHeight,
+        bytes: bytes.buffer,
+        format: Format.uint8,
+        numChannels: 3);
     return fromImage(image);
   }
 
@@ -75,6 +77,16 @@ class TensorImage {
   /// Load [Image] to this [TensorImage]
   void loadImage(Image image) {
     _container = ImageContainer.create(image);
+  }
+
+  void loadBytes(Uint8List bytes, int originalWidth, int originalHeight) {
+    final Image image = Image.fromBytes(
+        width: originalWidth,
+        height: originalHeight,
+        bytes: bytes.buffer,
+        format: Format.uint8,
+        numChannels: 3);
+    loadImage(image);
   }
 
   /// Load a list of RGB pixels into this [TensorImage]
@@ -180,7 +192,7 @@ class TensorImage {
   /// It's essentially a short cut for [getTensorBuffer.getBuffer()].
   ///
   /// Throws [StateError] if the TensorImage never loads data.
-  ByteBuffer get buffer {    
+  ByteBuffer get buffer {
     return tensorBuffer.buffer;
   }
 

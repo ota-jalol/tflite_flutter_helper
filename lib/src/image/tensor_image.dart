@@ -45,6 +45,10 @@ class TensorImage {
     tensorImage.loadImage(image);
     return tensorImage;
   }
+  static TensorImage fromBytes(Uint8List bytes) {
+    Image image = decodeImage(bytes)!;
+    return fromImage(image);
+  }
 
   /// Initialize [TensorImage] from [File]
   ///

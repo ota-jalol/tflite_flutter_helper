@@ -45,8 +45,13 @@ class TensorImage {
     tensorImage.loadImage(image);
     return tensorImage;
   }
-  static TensorImage fromBytes(Uint8List bytes) {
-    Image image = decodeImage(bytes)!;
+  static TensorImage fromBytes(Uint8List bytes,int originalWidth,int originalHeight) {
+          final Image image = Image.fromBytes(
+          width: originalWidth,
+          height: originalHeight,
+          bytes: bytes.buffer,
+          format: Format.uint8,
+          numChannels: 3);
     return fromImage(image);
   }
 

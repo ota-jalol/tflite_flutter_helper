@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -99,7 +100,7 @@ class TensorImage {
     buffer.loadList(pixels, shape: shape);
     loadTensorBuffer(buffer);
   }
-
+ 
   /// Loads a [TensorBuffer] containing pixel values. The color layout should be RGB.
   ///
   /// Throws [ArgumentError] if [TensorBuffer.shape] is not in form (height, width ,channels) or
@@ -116,6 +117,14 @@ class TensorImage {
             "Only ColorSpaceType.RGB and ColorSpaceType.GRAYSCALE are supported. Use" +
                 " `load(TensorBuffer, ImageProperties)` for other color space types.");
     _container = TensorBufferContainer.create(buffer, colorSpaceType);
+  }
+
+  /// Converts the image to a Base64 string.
+  String toBase64() {
+    if (_container == null) {
+      throw new StateError("No image has been loaded yet.");
+    }
+    return base64Encode(encodePng(_container!.image));
   }
 
   /// Gets the image width.

@@ -80,14 +80,14 @@ class TensorImage {
     _container = ImageContainer.create(image);
   }
 
-  void loadBytes(Uint8List bytes, int originalWidth, int originalHeight, ChannelOrder? channelOrder) {
+  void loadBytes(Uint8List bytes, int originalWidth, int originalHeight, int numChannels, [ChannelOrder channelOrder=ChannelOrder.bgra]) {
     final Image image = Image.fromBytes(
         width: originalWidth,
         height: originalHeight,
         bytes: bytes.buffer,
         format: Format.uint8,
-        order: channelOrder ?? ChannelOrder.rgba,
-        numChannels: 3);
+        order: channelOrder,
+        numChannels: numChannels);
     loadImage(image);
   }
 
